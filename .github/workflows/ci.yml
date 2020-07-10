@@ -18,6 +18,6 @@ jobs:
 
       - name: test action
         id: sampletest
-        uses: /
+        uses: ./
         with:
             resource_group: "testgroup"
