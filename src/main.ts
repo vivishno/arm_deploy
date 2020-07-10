@@ -24,7 +24,7 @@ async function main() {
         await executeAzCliCommand("--version");
         let template_path = `${workspacePath}` + "/.cloud/.azure/arm_deploy.json";
         let template_param_path = `${workspacePath}` + "/.cloud/.azure/arm_deploy.params.json";
-        let command = "group deployment validate -g ashkuma_functionAppRsGroup --template-file" + `${template_path}` + "--parameters" + `${template_param_path}` + " -o json";
+        let command = "group deployment validate -g ashkuma_functionAppRsGroup --template-file " + `${template_path}` + " --parameters " + `${template_param_path}` + " -o json";
         await executeAzCliCommand(`${command}`);
     
     } finally {
