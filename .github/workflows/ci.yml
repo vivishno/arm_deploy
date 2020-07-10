@@ -1,0 +1,22 @@
+# Test Actions train a model on Azure Machine Learning  
+name: aml-deploy-infrastructure 
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/deploy_train.yml'
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: azure/login@v1.1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: test action
+        id: sampletest
+        uses: lib/main.js
+        with:
+            resource_group: "testgroup"
