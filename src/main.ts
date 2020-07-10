@@ -22,8 +22,8 @@ async function main() {
         let resource_group = core.getInput('resource_group',{required:true})
         azPath = await io.which("az", true);
         await executeAzCliCommand("--version");
-        let template_path = `${workspacePath}` + "/.cloud/.azure/arm_deploy.json";
-        let template_param_path = `${workspacePath}` + "/.cloud/.azure/arm_deploy.params.json";
+        let template_path = `${workspacePath}` + "/.cloud/.azure/deploy.json";
+        let template_param_path = `${workspacePath}` + "/.cloud/.azure/deploy.params.json";
         let command = "group deployment validate -g ashkuma_functionAppRsGroup --template-file " + `${template_path}` + " --parameters " + `${template_param_path}` + " -o json";
         await executeAzCliCommand(`${command}`);
     
