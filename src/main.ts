@@ -22,6 +22,7 @@ async function main() {
         let resource_group = core.getInput('resource_group',{required:true})
         azPath = await io.which("az", true);
         await executeAzCliCommand("--version");
+        await executeAzCliCommand("account list");
     
     } finally {
         // Reset AZURE_HTTP_USER_AGENT
