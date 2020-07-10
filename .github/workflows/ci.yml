@@ -9,8 +9,8 @@ jobs:
   train:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checking out repo code'
-        uses: actions/checkout@v2
+      # - name: 'Checking out repo code'
+      #   uses: actions/checkout@v2
 
       - uses: azure/login@v1.1
         with:
@@ -18,6 +18,6 @@ jobs:
 
       - name: test action
         id: sampletest
-        uses: ./
+        uses: mlopstemplates/arm_deploy@master
         with:
             resource_group: "testgroup"
