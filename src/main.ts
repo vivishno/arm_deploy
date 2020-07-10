@@ -8,7 +8,7 @@ import { FormatType, SecretParser } from 'actions-secret-parser';
 var azPath: string;
 var prefix = !!process.env.AZURE_HTTP_USER_AGENT ? `${process.env.AZURE_HTTP_USER_AGENT}` : "";
 var azPSHostEnv = !!process.env.AZUREPS_HOST_ENVIRONMENT ? `${process.env.AZUREPS_HOST_ENVIRONMENT}` : "";
-
+var workspacePath = !!process.env.GITHUB_WORKSPACE ? `${process.env.GITHUB_WORKSPACE}}`:"";
 async function main() {
     try {
         // Set user agent variable
@@ -22,8 +22,10 @@ async function main() {
         let resource_group = core.getInput('resource_group',{required:true})
         azPath = await io.which("az", true);
         await executeAzCliCommand("--version");
-
-        await executeAzCliCommand("group deployment validate -g ashkuma_functionAppRsGroup --template-file '${process.env.GITHUB_WORKSPACE}/.cloud/.azure/arm_deploy.json' --parameters '${process.env.GITHUB_WORKSPACE}/.cloud/.azure/arm_deploy.params.json' -o json");
+        let template_path = `${workspacePath}` + "/.cloud/.azure/arm_deploy.json";
+        let template_param_path = `${workspacePath}` + "/.cloud/.azure/arm_deploy.params.json";
+        let command = "group deployment validate -g ashkuma_functionAppRsGroup --template-file" + `${template_path}` + "--parameters" + `${template_param_path}` + " -o json";
+        await executeAzCliCommand(`${command}`);
     
     } finally {
         // Reset AZURE_HTTP_USER_AGENT
