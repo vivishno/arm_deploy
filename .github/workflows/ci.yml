@@ -11,13 +11,13 @@ jobs:
     steps:
       - name: 'Checking out repo code'
         uses: actions/checkout@v2
-        
+
       - uses: azure/login@v1.1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: test action
         id: sampletest
-        uses: lib/main.js
+        uses: ./lib/main.js
         with:
             resource_group: "testgroup"
