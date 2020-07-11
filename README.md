@@ -1,5 +1,4 @@
-#test arm deploy
-## GitHub Actions for deploying to Azure resources to azure using ARM templates
+## GitHub Actions for deploying Azure resources using ARM templates
 
 [GitHub Actions](https://help.github.com/en/articles/about-github-actions)  gives you the flexibility to build an automated software development lifecycle workflow. 
 
@@ -44,36 +43,21 @@ jobs:
 
 ## Dependency :
 
-For any credentials like Azure Service Principal, Publish Profile etc add them as [secrets](https://help.github.com/en/articles/virtual-environments-for-github-actions#creating-and-using-secrets-encrypted-variables) in the GitHub repository and then use them in the workflow.
-
-The above example uses user-level credentials i.e., Azure Service Principal for deployment. 
-
-Follow the steps to configure the secret:
-  * Define a new secret under your repository settings, Add secret menu
-  * Store the output of the below [az cli](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest) command as the value of secret variable, for example 'AZURE_CREDENTIALS'
-```bash  
-
-   az ad sp create-for-rbac --name "myApp" --role contributor \
-                            --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group} \
-                            --sdk-auth
-                            
-  # Replace {subscription-id}, {resource-group} with the subscription, resource group details
-
-  # The command should output a JSON object similar to this:
-
-  {
-    "clientId": "<GUID>",
-    "clientSecret": "<GUID>",
-    "subscriptionId": "<GUID>",
-    "tenantId": "<GUID>",
-    (...)
-  }
-  
-```
-  * Now in the workflow file in your branch: `.github/workflows/workflow.yml` replace the secret in Azure login action with your secret (Refer to the example above)
+- [Azure Login Action](https://github.com/Azure/login)
 
 
-# Azure Login metadata file
+| Input | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
+| resource_group | yes | "deploy.json" | We expect a JSON file in the `.cloud/.azure` folder in root of your repository specifying your model deployment details. If you have want to provide these details in a file other than "deploy.json" you need to provide this input in the action. |
+| mode | no | Incremental | The deployment mode.  Allowed values: Complete, Incremental.  Default: Incremental. See [DeploymentModes](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-modes) for details|
+| name | no | org+"_"+reponame | The deployment name |
+| rollback_on_error | no | - | The name of a deployment to roll back to on error, or use as a flag to roll back to the last successful deployment. |
+| template_file | yes | - |  The path to the template file |
+| parameter_file | yes | - | The path to the parameters file.|
+| parameters | no | - | the parameters directly as as <KEY=VALUE> pairs |
+
+
+# Azure ARM Deploy sample yaml file
 
 ```yaml
 # Deploy your ARM template at resource group level
