@@ -5,7 +5,6 @@ inputs:
   resource_group: 
     description: 'Resource group on which the resource has to be deployed'
     required: false
-    default: false
   mode:
     description: 'The deployment mode.  Allowed values: Complete, Incremental.  Default: Incremental.'
     required: false
@@ -13,11 +12,11 @@ inputs:
   name:
     description: 'The deployment name.'
     required: false
-    required: ""
+    default: ""
   rollback_on_error:
     description: 'The name of a deployment to roll back to on error, or use as a flag to roll back to the last successful deployment.'
     required: false
-    required: ""
+    default: ""
   template_file: 
     description: 'The path to the template file'
     required: true
