@@ -63,28 +63,28 @@ function getCommandToExecute(){
 
     let template_path = `${workspacePath}` + `${template_file}`;
 
-    if (mode != undefined){
+    if (mode){
         command = command + " --mode " + `${mode}`
     }
 
-    if(name == undefined){
+    if(!name){
         name = `${process.env.GITHUB_REPOSITORY}`
     }
 
     command = command + " --name " + `${name}`;
 
-    if(rollback_on_error != undefined){
+    if(rollback_on_error){
         command = command + " --rollback_on_error " + `${rollback_on_error}`;
     }
 
     command = command + " --template-file " + `${template_path}`;
 
-    if (parameter_file != undefined){
+    if (parameter_file){
         let template_param_path = `${workspacePath}` + `${parameter_file}`;
         command = command +  " --parameters " + `${template_param_path}`;
     }
 
-    if (parameters != undefined){
+    if (parameters){
         command = command + " --parameters " + `${parameters}`;
     }
 

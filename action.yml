@@ -13,18 +13,23 @@ inputs:
   name:
     description: 'The deployment name.'
     required: false
+    required: ""
   rollback_on_error:
     description: 'The name of a deployment to roll back to on error, or use as a flag to roll back to the last successful deployment.'
     required: false
+    required: ""
   template_file: 
     description: 'The path to the template file'
     required: true
+    default: ""
   parameter_file:
     description: 'The path to the parameters file'
     required: false
+    default: ""
   parameters:
     description: 'the parameters directly as as <KEY=VALUE> pairs'
     required: false
+    default: ""
 branding:
   icon: 'login.svg'
   color: 'blue'
