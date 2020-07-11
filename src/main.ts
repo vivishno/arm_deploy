@@ -6,8 +6,6 @@ import * as io from '@actions/io';
 import { FormatType, SecretParser } from 'actions-secret-parser';
 
 var azPath: string;
-// var prefix = !!process.env.AZURE_HTTP_USER_AGENT ? `${process.env.AZURE_HTTP_USER_AGENT}` : "";
-// var azPSHostEnv = !!process.env.AZUREPS_HOST_ENVIRONMENT ? `${process.env.AZUREPS_HOST_ENVIRONMENT}` : "";
 var workspacePath = !!process.env.GITHUB_WORKSPACE ? `${process.env.GITHUB_WORKSPACE}`:"";
 async function main() {
     try {
@@ -15,7 +13,6 @@ async function main() {
         var isArmDeploymentSuccess = false;
         let usrAgentRepo = crypto.createHash('sha256').update(`${process.env.GITHUB_REPOSITORY}`).digest('hex');
         let actionName = 'ArmDeploy';
-
 
         // get the input params
         let resource_group = core.getInput('resource_group',{required:true})
@@ -28,19 +25,12 @@ async function main() {
         let command = getCommandToExecute();
         
         command = validation_command + command + " -o json"; 
-       
-        //let command = "deployment group validate -g ashkuma_functionAppRsGroup --template-file " + `${template_path}` + " --parameters " + `${template_param_path}` + " -o json";
         var deploy_result = await executeAzCliCommand(`${command}`);
-        
     
     } finally {
-        // // Reset AZURE_HTTP_USER_AGENT
-        // core.exportVariable('AZURE_HTTP_USER_AGENT', prefix);
-        // core.exportVariable('AZUREPS_HOST_ENVIRONMENT', azPSHostEnv);
+       
     }
 }
-
-
 
 function getCommandToExecute(){
     var command = " ";

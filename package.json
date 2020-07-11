@@ -7,7 +7,7 @@
     "build": "tsc",
     "test": "jest"
   },
-  "author": "Ashish Kumar",
+  "author": "Microsoft",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^25.1.4",

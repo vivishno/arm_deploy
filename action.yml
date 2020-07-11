@@ -1,4 +1,4 @@
-# Login to Azure subscription
+# Deploy your ARM template at resource group level
 name: 'Azure ARM Deploy'
 description: 'Deploys an azure arm template to azure at a resource group level'
 inputs: 
