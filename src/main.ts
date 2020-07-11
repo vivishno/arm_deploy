@@ -15,20 +15,10 @@ async function main() {
         var isArmDeploymentSuccess = false;
         let usrAgentRepo = crypto.createHash('sha256').update(`${process.env.GITHUB_REPOSITORY}`).digest('hex');
         let actionName = 'ArmDeploy';
-        // let userAgentString = (!!prefix ? `${prefix}+` : '') + `GITHUBACTIONS/${actionName}@v1_${usrAgentRepo}`;
-        // let azurePSHostEnv = (!!azPSHostEnv ? `${azPSHostEnv}+` : '') + `GITHUBACTIONS/${actionName}@v1_${usrAgentRepo}`;
-        // core.exportVariable('AZURE_HTTP_USER_AGENT', userAgentString);
-        // core.exportVariable('AZUREPS_HOST_ENVIRONMENT', azurePSHostEnv);
+
 
         // get the input params
         let resource_group = core.getInput('resource_group',{required:true})
-        let mode = core.getInput('mode',{required:false})
-        let name = core.getInput('name',{required:false})
-        let rollback_on_error = core.getInput('rollback_on_error',{required:false})
-        let template_file = core.getInput('template_file',{required:true})
-        let parameter_file = core.getInput('parameter_file',{required:false})
-        let parameters = core.getInput('parameters',{required:false})
-
 
         azPath = await io.which("az", true);
         await executeAzCliCommand("--version");
@@ -41,6 +31,7 @@ async function main() {
        
         //let command = "deployment group validate -g ashkuma_functionAppRsGroup --template-file " + `${template_path}` + " --parameters " + `${template_param_path}` + " -o json";
         var deploy_result = await executeAzCliCommand(`${command}`);
+        
     
     } finally {
         // // Reset AZURE_HTTP_USER_AGENT
@@ -66,9 +57,10 @@ function getCommandToExecute(){
     if (mode){
         command = command + " --mode " + `${mode}`
     }
-
+    
     if(!name){
-        name = `${process.env.GITHUB_REPOSITORY}`
+        name = `${process.env.GITHUB_REPOSITORY}`;
+        name = name.replace("/",'_');
     }
 
     command = command + " --name " + `${name}`;
