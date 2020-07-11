@@ -21,3 +21,5 @@ jobs:
         uses: mlopstemplates/arm_deploy@master
         with:
             resource_group: "testgroup"
+            template_file: "/.cloud/.azure/deploy.json"
+            parameter_file: "/.cloud/.azure/deploy.params.json"

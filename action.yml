@@ -1,11 +1,35 @@
 # Login to Azure subscription
-name: 'Azure Login'
-description: 'Authenticate to Azure and run your Az CLI or Az PowerShell based Actions or scripts. github.com/Azure/Actions'
+name: 'Azure ARM Deploy'
+description: 'Deploys an azure arm template to azure at a resource group level'
 inputs: 
   resource_group: 
-    description: 'Set this value to true to enable Azure PowerShell Login in addition to Az CLI login'
+    description: 'Resource group on which the resource has to be deployed'
     required: false
     default: false
+  mode:
+    description: 'The deployment mode.  Allowed values: Complete, Incremental.  Default: Incremental.'
+    required: false
+    default: 'Incremental'
+  name:
+    description: 'The deployment name.'
+    required: false
+    default: 'Repository Name'
+  rollback_on_error:
+    description: 'The name of a deployment to roll back to on error, or use as a flag to roll back to the last successful deployment.'
+    required: false
+    default: false
+  template_file: 
+    description: 'The path to the template file'
+    required: true
+    default: ""
+  parameter_file:
+    description: 'The path to the parameters file'
+    required: false
+    default: ""
+  parameters:
+    description: 'the parameters directly as as <KEY=VALUE> pairs'
+    required: false
+    default: ""
 branding:
   icon: 'login.svg'
   color: 'blue'
