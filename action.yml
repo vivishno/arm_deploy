@@ -13,7 +13,7 @@ inputs:
   name:
     description: 'The deployment name.'
     required: false
-    default: 'Repository Name'
+    default: undefined
   rollback_on_error:
     description: 'The name of a deployment to roll back to on error, or use as a flag to roll back to the last successful deployment.'
     required: false
@@ -21,15 +21,15 @@ inputs:
   template_file: 
     description: 'The path to the template file'
     required: true
-    default: ""
+    default: undefined
   parameter_file:
     description: 'The path to the parameters file'
     required: false
-    default: ""
+    default: undefined
   parameters:
     description: 'the parameters directly as as <KEY=VALUE> pairs'
     required: false
-    default: ""
+    default: undefined
 branding:
   icon: 'login.svg'
   color: 'blue'
