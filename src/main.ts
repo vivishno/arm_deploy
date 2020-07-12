@@ -4,6 +4,7 @@ import * as exec from '@actions/exec';
 import * as io from '@actions/io';
 
 import { FormatType, SecretParser } from 'actions-secret-parser';
+import { ExecOptions } from 'child_process';
 
 var azPath: string;
 var workspacePath = !!process.env.GITHUB_WORKSPACE ? `${process.env.GITHUB_WORKSPACE}`:"";
@@ -91,14 +92,26 @@ function getCommandToExecute(){
 
 async function executeAzCliCommand(command: string, silent?: boolean) {
     try {
-        return await exec.exec(`"${azPath}" ${command}`, [],  {silent: !!silent}).then(
+        let myOutput = '';
+        const options:any = {};
+        options.listeners = {
+            stdout: (data: Buffer) => {
+                myOutput += data.toString();
+            },
+            stderr: (data: Buffer) => {
+                myOutput += data.toString();
+            }
+        };
+        options.silent =!!silent;
+        await exec.exec(`"${azPath}" ${command}`, [], options).then(
             (result) => {
                 core.info("success : " + JSON.stringify(result));
-                return result;
+                
                 },(reason)=>{
                     // core.debug("rejected : " + JSON.stringify(reason));
                     core.info("rejected : " + JSON.stringify(reason));
-                    return reason}); 
+                    });
+        return myOutput;
     }
     catch(error) {
         throw new Error(error);
