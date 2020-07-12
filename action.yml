@@ -31,7 +31,9 @@ inputs:
     default: ''
 outputs:
   deployment_status:
-  description: 'Status of the deployment'
+    description: 'Status of the deployment'
+  deployment_error:
+    description: 'deployment error details in case status is Failed'
 branding:
   color: 'blue'
 runs:

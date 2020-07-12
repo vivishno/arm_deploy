@@ -23,3 +23,8 @@ jobs:
             resource_group: "testgroup"
             template_file: "/.cloud/.azure/deploy.json"
             parameter_file: "/.cloud/.azure/deploy.params.json"
+      
+      - name: Display deployment output details
+        run: |
+          echo deployment_status: ${{ steps.sampletest.outputs.deployment_status}}
+          echo deployment_error: ${{ steps.sampletest.outputs.deployment_error}}

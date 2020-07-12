@@ -29,7 +29,12 @@ async function main() {
             // this means something wrong with the validation 
             var deployment_command = deployment_prefix + command + " -o json";
             var deployment_result = await executeAzCliCommand(`${deployment_command}`);
-            isArmDeploymentSuccess = true;
+            if (deployment_result["status"] === "Failed"){
+                core.setOutput("deployment_error", deployment_result["error"])
+            }
+            else{
+                isArmDeploymentSuccess = true;
+            }
         }
         else{
 
