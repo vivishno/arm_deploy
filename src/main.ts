@@ -11,8 +11,6 @@ async function main() {
     try {
         // Set user agent variable
         var isArmDeploymentSuccess = false;
-        let usrAgentRepo = crypto.createHash('sha256').update(`${process.env.GITHUB_REPOSITORY}`).digest('hex');
-        let actionName = 'ArmDeploy';
 
         // get the input params
         let resource_group = core.getInput('resource_group',{required:true})
@@ -24,12 +22,19 @@ async function main() {
         let deployment_prefix = "deployment group create " + "-g " + `${resource_group}`
         let command = getCommandToExecute();
         
-        var validation_command = validation_prefix + command + " -o json"; 
+        var validation_command = validation_prefix + command + " -o json --query error"; 
         var validation_result = await executeAzCliCommand(`${validation_command}`);
 
-        var deployment_command = deployment_prefix + command + " -o json";
-        var deployment_result = await executeAzCliCommand(`${deployment_command}`);
-        isArmDeploymentSuccess = true;
+        if (!validation_result){
+            // this means something wrong with the validation 
+            var deployment_command = deployment_prefix + command + " -o json";
+            var deployment_result = await executeAzCliCommand(`${deployment_command}`);
+            isArmDeploymentSuccess = true;
+        }
+        else{
+
+        }
+            
         core.setOutput("deployment_status", ""+isArmDeploymentSuccess);
     } finally {
        
@@ -80,7 +85,7 @@ function getCommandToExecute(){
 
 async function executeAzCliCommand(command: string, silent?: boolean) {
     try {
-        await exec.exec(`"${azPath}" ${command}`, [],  {silent: !!silent}); 
+        return await exec.exec(`"${azPath}" ${command}`, [],  {silent: !!silent}); 
     }
     catch(error) {
         throw new Error(error);

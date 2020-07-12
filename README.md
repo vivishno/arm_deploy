@@ -55,7 +55,7 @@ jobs:
 | name | no | org+"_"+reponame | The deployment name |
 | rollback_on_error | no | - | The name of a deployment to roll back to on error, or use as a flag to roll back to the last successful deployment. |
 | template_file | yes | - |  The path to the template file |
-| parameter_file | yes | - | The path to the parameters file.|
+| parameter_file | no | - | The path to the parameters file.|
 | parameters | no | - | the parameters directly as as <KEY=VALUE> pairs |
 
 
