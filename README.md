@@ -6,6 +6,8 @@ With [GitHub Actions for Azure](https://github.com/Azure/actions/) you can creat
 
 # GitHub Action for ARM Template Deployment
 With the Azure Arm Deploy Action, you can automate your workflow to deploy resources to Azure  using your ARM templates.
+You can target your deployment to a resource group, subscription, management group, or tenant.
+But this action only targets deployment to a resource group.
 
 Get started today with a [free Azure account](https://azure.com/free/open-source)!
 
@@ -48,7 +50,7 @@ jobs:
 
 | Input | Required | Default | Description |
 | ----- | -------- | ------- | ----------- |
-| resource_group | yes | "deploy.json" | We expect a JSON file in the `.cloud/.azure` folder in root of your repository specifying your model deployment details. If you have want to provide these details in a file other than "deploy.json" you need to provide this input in the action. |
+| resource_group | yes | - | resource group to deploy the template to |
 | mode | no | Incremental | The deployment mode.  Allowed values: Complete, Incremental.  Default: Incremental. See [DeploymentModes](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-modes) for details|
 | name | no | org+"_"+reponame | The deployment name |
 | rollback_on_error | no | - | The name of a deployment to roll back to on error, or use as a flag to roll back to the last successful deployment. |
@@ -92,7 +94,6 @@ inputs:
     required: false
     default: ''
 branding:
-  icon: 'login.svg'
   color: 'blue'
 runs:
   using: 'node12'
