@@ -29,8 +29,10 @@ inputs:
     description: 'the parameters directly as as <KEY=VALUE> pairs'
     required: false
     default: ''
+outputs:
+  deployment_status:
+  description: 'Status of the deployment'
 branding:
-  icon: 'login.svg'
   color: 'blue'
 runs:
   using: 'node12'

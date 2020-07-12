@@ -20,13 +20,17 @@ async function main() {
         azPath = await io.which("az", true);
         await executeAzCliCommand("--version");
 
-        let validation_command = "deployment group validate " + "-g " + `${resource_group}`
-        let deployment_command = "deployment group create " + "-g " + `${resource_group}`
+        let validation_prefix = "deployment group validate " + "-g " + `${resource_group}`
+        let deployment_prefix = "deployment group create " + "-g " + `${resource_group}`
         let command = getCommandToExecute();
         
-        command = validation_command + command + " -o json"; 
-        var deploy_result = await executeAzCliCommand(`${command}`);
-    
+        var validation_command = validation_prefix + command + " -o json"; 
+        var validation_result = await executeAzCliCommand(`${validation_command}`);
+
+        var deployment_command = deployment_prefix + command + " -o json";
+        var deployment_result = await executeAzCliCommand(`${deployment_command}`);
+        isArmDeploymentSuccess = true;
+        core.setOutput("deployment_status", ""+isArmDeploymentSuccess);
     } finally {
        
     }
