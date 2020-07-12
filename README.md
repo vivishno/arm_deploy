@@ -9,9 +9,9 @@ With the Azure Arm Deploy Action, you can automate your workflow to deploy resou
 
 Get started today with a [free Azure account](https://azure.com/free/open-source)!
 
-This repository contains GitHub Action for [Azure ARM deploy](https://github.com/Azure/login/blob/master/action.yml).
+This repository contains GitHub Action for [Azure ARM deploy](https://github.com/mlopstemplates/arm_deploy/blob/master/.github/workflows/ci.yml).
 
-## Sample workflow that uses Azure login action to run az cli
+## Sample workflow that uses Azure Arm Deploy action
 
 ```yaml
 
@@ -57,7 +57,7 @@ jobs:
 | parameters | no | - | the parameters directly as as <KEY=VALUE> pairs |
 
 
-# Azure ARM Deploy sample yaml file
+# Azure ARM Deploy action metadata file
 
 ```yaml
 # Deploy your ARM template at resource group level
