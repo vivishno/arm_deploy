@@ -38,7 +38,7 @@ async function main() {
             // }
         }
         else{
-
+            
         }
             
         core.setOutput("deployment_status", ""+isArmDeploymentSuccess);
@@ -91,7 +91,13 @@ function getCommandToExecute(){
 
 async function executeAzCliCommand(command: string, silent?: boolean) {
     try {
-        return await exec.exec(`"${azPath}" ${command}`, [],  {silent: !!silent}).then( (result) => {return result},(reason)=>{return reason}); 
+        return await exec.exec(`"${azPath}" ${command}`, [],  {silent: !!silent}).then(
+            (result) => {
+                core.debug(JSON.stringify(result));
+                return result;
+                },(reason)=>{
+                    core.debug(JSON.stringify(reason));
+                    return reason}); 
     }
     catch(error) {
         throw new Error(error);
