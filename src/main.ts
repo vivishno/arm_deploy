@@ -30,7 +30,7 @@ async function main() {
             // this means something wrong with the validation 
             var deployment_command = deployment_prefix + command + " -o json --query properties.provisioningState";
             var deployment_result = await executeAzCliCommand(`${deployment_command}`);
-            core.info("deployment_result : " + JSON.stringify(deployment_result));
+            core.info("deployment_result : " + deployment_result.replace(/\n/g, ''));
             if (deployment_result+"" === "Succeeded"){
                 isArmDeploymentSuccess = true;
             }
@@ -96,10 +96,10 @@ async function executeAzCliCommand(command: string, silent?: boolean) {
         const options:any = {};
         options.listeners = {
             stdout: (data: Buffer) => {
-                myOutput += data.toString();
+                myOutput = data.toString();
             },
             stderr: (data: Buffer) => {
-                myOutput += data.toString();
+                myOutput = data.toString();
             }
         };
         options.silent =!!silent;
