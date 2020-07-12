@@ -29,8 +29,8 @@ async function main() {
             // this means something wrong with the validation 
             var deployment_command = deployment_prefix + command + " -o json --query properties.provisioningState";
             var deployment_result = await executeAzCliCommand(`${deployment_command}`);
-            
-            if (deployment_result === "Succeeded"){
+            core.debug("deployment_result : " +JSON.stringify(deployment_result));
+            if (deployment_result+"" === "Succeeded"){
                 isArmDeploymentSuccess = true;
             }
             else{
