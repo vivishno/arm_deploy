@@ -90,7 +90,7 @@ function getCommandToExecute(){
 
 async function executeAzCliCommand(command: string, silent?: boolean) {
     try {
-        return await exec.exec(`"${azPath}" ${command}`, [],  {silent: !!silent}); 
+        return await exec.exec(`"${azPath}" ${command}`, [],  {silent: !!silent}).then( (result) => {return result},(reason)=>{return reason}); 
     }
     catch(error) {
         throw new Error(error);
