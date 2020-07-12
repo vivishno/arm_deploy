@@ -27,18 +27,18 @@ async function main() {
 
         if (!validation_result){
             // this means something wrong with the validation 
-            var deployment_command = deployment_prefix + command + " -o json";
+            var deployment_command = deployment_prefix + command + " -o json --query properties.provisioningState";
             var deployment_result = await executeAzCliCommand(`${deployment_command}`);
-            core.setOutput("deployment_error", deployment_result)
-            // if (deployment_result["status"] === "Failed"){
-                
-            // }
-            // else{
-            //     isArmDeploymentSuccess = true;
-            // }
+            
+            if (deployment_result === "Succeeded"){
+                isArmDeploymentSuccess = true;
+            }
+            else{
+                core.setOutput("deployment_error", deployment_result)
+            }
         }
         else{
-            
+            core.setOutput("deployment_error", validation_result)
         }
             
         core.setOutput("deployment_status", ""+isArmDeploymentSuccess);
