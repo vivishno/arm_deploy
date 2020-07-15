@@ -53,7 +53,7 @@ async function deployscope_resource_group(){
     try{
         if (validation_result.status == 0){
             // this validation has passed 
-            var deployment_command = deployment_prefix + command + " -o json --query properties.outputs";
+            var deployment_command = deployment_prefix + command + " -o json --query properties.outputResources";
             var deployment_result = await executeAzCliCommand(`${deployment_command}`);
             if (deployment_result.status != 0){
                 // command was not successful
