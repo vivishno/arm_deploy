@@ -57,19 +57,17 @@ async function deployscope_resource_group(){
             if (deployment_result.status != 0){
                 // command was not successful
                 isArmDeploymentSuccess = false;
-                core.info("deployment_result : " + deployment_data);
+                core.setOutput("deployment_result", deployment_result.data)
             }
             else{
                 isArmDeploymentSuccess = true;
                 var deployment_data = deployment_result.data;
-                core.info("deployment_result : " + deployment_data);
+                core.setOutput("deployment_result" , deployment_data);
             }
         }
         else{
             core.setOutput("deployment_result", validation_result.data)
         }
-            
-        core.setOutput("deployment_status ", ""+isArmDeploymentSuccess);
     } finally {
         core.setOutput("deployment_status ", ""+isArmDeploymentSuccess);
     }
@@ -119,7 +117,7 @@ function getCommandToExecute(){
 async function executeAzCliCommand(command: string, silent?: boolean) {
     try {
         let myOutput = '';
-        let status = 1;
+        let status:any = 1;
         const options:any = {};
         options.listeners = {
             stdout: (data: Buffer) => {
@@ -136,7 +134,7 @@ async function executeAzCliCommand(command: string, silent?: boolean) {
                 status = result;
                 },(reason)=>{
                     core.info("rejected : " + JSON.stringify(reason));
-                    status = reason;
+                    status = JSON.stringify(reason);
                     });
         core.info("myoutput : " + myOutput);
         core.info("status : " + status);
