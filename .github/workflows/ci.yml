@@ -27,5 +27,5 @@ jobs:
       
       - name: Display deployment output details
         run: |
-          echo deployment_status: ${{ steps.sampletest.outputs.deployment_status}}
-          echo deployment_error: ${{ steps.sampletest.outputs.deployment_error}}
+          echo deployment_status: "${{ steps.sampletest.outputs.deployment_status}}"
+          echo deployment_error: "${{ steps.sampletest.outputs.deployment_error}}"
