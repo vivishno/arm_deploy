@@ -2,8 +2,14 @@
 name: 'Azure ARM Deploy'
 description: 'Deploys an azure arm template to azure at a resource group level'
 inputs: 
+  scope:
+    description: 'Scope of deployment either of these < resource_group, subscription, management_group, tenant >'
+    required: true
+  location:
+    description: 'location where deployment has to happen: NOt required if deployment on resource group '
+    required: true
   resource_group: 
-    description: 'Resource group on which the resource has to be deployed'
+    description: 'Resource group on which the resource has to be deployed : required when scope is resource group'
     required: false
   mode:
     description: 'The deployment mode.  Allowed values: Complete, Incremental.  Default: Incremental.'
