@@ -15,7 +15,7 @@ inputs:
     description: "The management group id to create deployment at : only required when scope is management group"
     required: false
   mode:
-    description: 'The deployment mode.  Allowed values: Complete, Incremental.  Default: Incremental.'
+    description: 'The deployment mode.Allowed values: Complete, Incremental.  Default: Incremental.'
     required: false
     default: ''
   name:
