@@ -16,16 +16,28 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      # - name: test action
+      #   id: sampletest
+      #   uses: mlopstemplates/arm_deploy@master
+      #   with:
+      #       scope: "resource_group"
+      #       resource_group: "ashkuma_armdeploytg"
+      #       template_file: "/.cloud/.azure/deploy.json"
+      #       parameter_file: "/.cloud/.azure/deploy.params.json"
+      
+      # - name: Display deployment output details
+      #   run: |
+      #     echo deployment_status: "${{ steps.sampletest.outputs.deployment_status}}"
+      #     echo deployment_error: "${{ steps.sampletest.outputs.deployment_error}}"
+
       - name: test action
-        id: sampletest
+        id: sampletest_sub
         uses: mlopstemplates/arm_deploy@master
         with:
-            scope: "resource_group"
-            resource_group: "ashkuma_armdeploytg"
-            template_file: "/.cloud/.azure/deploy.json"
-            parameter_file: "/.cloud/.azure/deploy.params.json"
+            scope: "subscription"
+            template_file: "/.cloud/.azure/deploy_sub.json"
       
       - name: Display deployment output details
         run: |
-          echo deployment_status: "${{ steps.sampletest.outputs.deployment_status}}"
-          echo deployment_error: "${{ steps.sampletest.outputs.deployment_error}}"
+          echo deployment_status: "${{ steps.sampletest_sub.outputs.deployment_status}}"
+          echo deployment_error: "${{ steps.sampletest_sub.outputs.deployment_error}}"
