@@ -36,6 +36,7 @@ jobs:
         with:
             scope: "subscription"
             template_file: "/.cloud/.azure/deploy_sub.json"
+            location: "southcentralus"
       
       - name: Display deployment output details
         run: |
