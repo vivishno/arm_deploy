@@ -49,6 +49,7 @@ async function deployscope_resource_group(){
     
     var validation_command = validation_prefix + command + " -o json"; 
     var validation_result = await executeAzCliCommand(`${validation_command}`);
+    core.info("validation result : " + JSON.stringify(validation_result))
     try{
         if (validation_result.status == 0){
             // this validation has passed 
@@ -57,20 +58,23 @@ async function deployscope_resource_group(){
             if (deployment_result.status != 0){
                 // command was not successful
                 isArmDeploymentSuccess = false;
-                core.setOutput("deployment_result", deployment_result.data)
+                core.setOutput("deployment_error", deployment_result.data)
             }
             else{
                 isArmDeploymentSuccess = true;
                 var deployment_data = deployment_result.data;
-                core.setOutput("deployment_result" , deployment_data);
+                core.setOutput("deployment_error" , deployment_data);
             }
         }
         else{
-            core.setOutput("deployment_result", validation_result.data)
+            core.setOutput("deployment_error", validation_result.data)
         }
     } finally {
-        core.setOutput("deployment_status ", ""+isArmDeploymentSuccess);
+        core.setOutput("deployment_status", ""+isArmDeploymentSuccess);
     }
+
+    core.setOutput("deployment_status", ""+isArmDeploymentSuccess);
+    core.info("---------------ACTION DONE--------------------")
 }
 
 function deployscope_subscription(){
@@ -130,10 +134,8 @@ async function executeAzCliCommand(command: string, silent?: boolean) {
         options.silent =!!silent;
         await exec.exec(`"${azPath}" ${command}`, [], options).then(
             (result) => {
-                core.info("success : " + JSON.stringify(result));
                 status = result;
                 },(reason)=>{
-                    core.info("rejected : " + JSON.stringify(reason));
                     status = JSON.stringify(reason);
                     });
         core.info("myoutput : " + myOutput);
