@@ -20,6 +20,7 @@ jobs:
         id: sampletest
         uses: mlopstemplates/arm_deploy@master
         with:
+            scope: "resource_group"
             resource_group: "testgroup"
             template_file: "/.cloud/.azure/deploy.json"
             parameter_file: "/.cloud/.azure/deploy.params.json"
