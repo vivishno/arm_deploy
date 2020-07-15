@@ -47,7 +47,7 @@ async function deployscope_resource_group(){
     let deployment_prefix = "deployment group create "
     let command = getCommandToExecute();
     
-    var validation_command = validation_prefix + command + " -o json --query error"; 
+    var validation_command = validation_prefix + command + " -o json"; 
     var validation_result = await executeAzCliCommand(`${validation_command}`);
     try{
         if (validation_result.status == 0){
@@ -71,7 +71,7 @@ async function deployscope_resource_group(){
             
         core.setOutput("deployment_status ", ""+isArmDeploymentSuccess);
     } finally {
-    
+        core.setOutput("deployment_status ", ""+isArmDeploymentSuccess);
     }
 }
 
@@ -138,6 +138,8 @@ async function executeAzCliCommand(command: string, silent?: boolean) {
                     core.info("rejected : " + JSON.stringify(reason));
                     status = reason;
                     });
+        core.info("myoutput : " + myOutput);
+        core.info("status : " + status);
         return {data:myOutput,status:status};
     }
     catch(error) {
