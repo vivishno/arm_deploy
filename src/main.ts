@@ -17,23 +17,30 @@ async function main() {
         await executeAzCliCommand("--version");
 
         let scope = core.getInput('scope',{required:true})
+        let validation_prefix = ""
+        let deployment_prefix = ""
         switch (scope){
             case "resource_group":
-                await deployscope_resource_group();
+                validation_prefix = "deployment group validate "
+                deployment_prefix = "deployment group create "
+                await deployscope(validation_prefix,deployment_prefix);
                 break;
             case "subscription":
-                await deployscope_subscription();
+                validation_prefix = "az deployment sub validate "
+                deployment_prefix = "az deployment sub create "
+                await deployscope(validation_prefix,deployment_prefix);
                 break;
             case "management_group":
-                deployscope_management_group();
+                validation_prefix = "az deployment mg validate "
+                deployment_prefix = "az deployment mg create "
+                await deployscope(validation_prefix,deployment_prefix);
                 break;
             case "tenant":
-                await deployscope_tenant()
+                validation_prefix = "az deployment tenant validate "
+                deployment_prefix = "az deployment tenant create "
+                await deployscope(validation_prefix,deployment_prefix);
                 break;
         }
-        // get the input params
-        
-
     }
     finally{
 
@@ -41,10 +48,7 @@ async function main() {
        
 }
 
-async function deployscope_resource_group(){
-    let resource_group = core.getInput('resource_group',{required:true})
-    let validation_prefix = "deployment group validate "
-    let deployment_prefix = "deployment group create "
+async function deployscope(validation_prefix,deployment_prefix){
     let command = getCommandToExecute();
     
     var validation_command = validation_prefix + command + " -o json"; 
@@ -77,27 +81,17 @@ async function deployscope_resource_group(){
     core.info("---------------ACTION DONE--------------------")
 }
 
-function deployscope_subscription(){
-
-}
-
-function deployscope_management_group(){
-
-}
-
-function deployscope_tenant(){
-
-}
-
 function getCommandToExecute(){
-    let resource_group = core.getInput('resource_group',{required:true})
+    let resource_group = core.getInput('resource_group',{required:false})
     let mode = core.getInput('mode',{required:false})
     let name = core.getInput('name',{required:false})
     let rollback_on_error = core.getInput('rollback_on_error',{required:false})
     let template_file = core.getInput('template_file',{required:true})
     let parameter_file = core.getInput('parameter_file',{required:false})
     let parameters = core.getInput('parameters',{required:false})
-    
+    let location = core.getInput("location",{required:false})
+    let management_group_id = core.getInput("management_group_id", {required:false})
+
     let template_path = `${workspacePath}` + `${template_file}`;
     let template_param_path = undefined
     if (parameter_file){
@@ -109,6 +103,8 @@ function getCommandToExecute(){
         template_path ? `--template-file ${template_path}` : undefined,
         mode ? `--mode ${mode}` : undefined,
         name ? `--name ${name}` : undefined,
+        location ? `--location ${location}` : undefined,
+        management_group_id ? `--management-group-id ${management_group_id}` : undefined,
         rollback_on_error ? `--rollback_on_error ${rollback_on_error}` : undefined,
         template_param_path ? `--parameters ${template_param_path}` : undefined,
         parameters ? `--parameters ${parameters}` : undefined

@@ -11,6 +11,9 @@ inputs:
   resource_group: 
     description: 'Resource group on which the resource has to be deployed : required when scope is resource group'
     required: false
+  management_group_id:
+    description: "The management group id to create deployment at : only required when scope is management group"
+    required: false
   mode:
     description: 'The deployment mode.  Allowed values: Complete, Incremental.  Default: Incremental.'
     required: false
