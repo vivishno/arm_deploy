@@ -7,7 +7,8 @@ With [GitHub Actions for Azure](https://github.com/Azure/actions/) you can creat
 # GitHub Action for ARM Template Deployment
 With the Azure Arm Deploy Action, you can automate your workflow to deploy resources to Azure  using your ARM templates.
 You can target your deployment to a resource group, subscription, management group, or tenant.
-But this action only targets deployment to a resource group.
+
+This action allows you to deploy your templates at different scopes.
 
 Get started today with a [free Azure account](https://azure.com/free/open-source)!
 
