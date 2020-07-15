@@ -89,7 +89,7 @@ jobs:
 | Input | Required | Default | Description |
 | ----- | -------- | ------- | ----------- |
 | scope | yes | - |Scope of deployment either of these < resource_group, subscription, management_group, tenant >|
-| resource_group | yes | - | resource group to deploy the template to |
+| resource_group | no | - | resource group to deploy the template to: required when scope is resource group |
 | location | no | - | location where deployment info has to be stored : Not required if deployment scope is resource_group |
 | management_group_id | no | - | The management group id to create deployment at : only required when scope is management group |
 | mode | no | Incremental | The deployment mode.  Allowed values: Complete, Incremental.  Default: Incremental. See [DeploymentModes](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-modes) for details|
