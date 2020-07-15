@@ -28,7 +28,7 @@ jobs:
       # - name: Display deployment output details
       #   run: |
       #     echo deployment_status: "${{ steps.sampletest.outputs.deployment_status}}"
-      #     echo deployment_error: "${{ steps.sampletest.outputs.deployment_error}}"
+      #     echo deployment_result: "${{ steps.sampletest.outputs.deployment_result}}"
 
       - name: test action
         id: sampletest_sub
@@ -41,4 +41,4 @@ jobs:
       - name: Display deployment output details
         run: |
           echo deployment_status: "${{ steps.sampletest_sub.outputs.deployment_status}}"
-          echo deployment_error: "${{ steps.sampletest_sub.outputs.deployment_error}}"
+          echo deployment_result: "${{ steps.sampletest_sub.outputs.deployment_result}}"

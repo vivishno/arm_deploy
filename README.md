@@ -13,7 +13,7 @@ Get started today with a [free Azure account](https://azure.com/free/open-source
 
 This repository contains GitHub Action for [Azure ARM deploy](https://github.com/mlopstemplates/arm_deploy/blob/master/.github/workflows/ci.yml).
 
-## Sample workflow that uses Azure Arm Deploy action
+## Sample workflow that uses Azure Arm Deploy action to deploy at resource group
 
 ```yaml
 
@@ -43,14 +43,55 @@ jobs:
     
 ```
 
+
+## Sample workflow that uses Azure Arm Deploy action to deploy at subscriptio level
+
+```yaml
+
+# File: .github/workflows/ci.yml
+
+on: [push]
+
+name: AzureArmDeploySample
+
+jobs:
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: azure/login@v1.1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+      - name: test action
+        id: sampletest_sub
+        uses: mlopstemplates/arm_deploy@master
+        with:
+            scope: "subscription"
+            template_file: "/.cloud/.azure/deploy_sub.json"
+            location: "southcentralus"
+      
+      - name: Display deployment output details
+        run: |
+          echo deployment_status: "${{ steps.sampletest_sub.outputs.deployment_status}}"
+          echo deployment_error: "${{ steps.sampletest_sub.outputs.deployment_error}}"
+    
+```
+
+
 ## Dependency :
 
 - [Azure Login Action](https://github.com/Azure/login)
 
+## Action Input Parameters
 
 | Input | Required | Default | Description |
 | ----- | -------- | ------- | ----------- |
+| scope | yes | - |Scope of deployment either of these < resource_group, subscription, management_group, tenant >|
 | resource_group | yes | - | resource group to deploy the template to |
+| location | no | - | location where deployment info has to be stored : Not required if deployment scope is resource_group |
+| management_group_id | no | - | The management group id to create deployment at : only required when scope is management group |
 | mode | no | Incremental | The deployment mode.  Allowed values: Complete, Incremental.  Default: Incremental. See [DeploymentModes](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-modes) for details|
 | name | no | org+"_"+reponame | The deployment name |
 | rollback_on_error | no | - | The name of a deployment to roll back to on error, or use as a flag to roll back to the last successful deployment. |
@@ -59,6 +100,12 @@ jobs:
 | parameters | no | - | the parameters directly as as <KEY=VALUE> pairs |
 
 
+## Action Output Parameters
+| Input | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
+| deployment_status | yes | - |Status of the deployment : true means sucess : false means failure|
+| deployment_result | yes | - | deployment details json, showing all the deployed resources. In case of error it contains the error string |
+
 # Azure ARM Deploy action metadata file
 
 ```yaml
@@ -66,13 +113,22 @@ jobs:
 name: 'Azure ARM Deploy'
 description: 'Deploys an azure arm template to azure at a resource group level'
 inputs: 
+  scope:
+    description: 'Scope of deployment either of these < resource_group, subscription, management_group, tenant >'
+    required: true
+  location:
+    description: 'location where deployment has to happen: NOt required if deployment on resource group '
+    required: true
   resource_group: 
-    description: 'Resource group on which the resource has to be deployed'
+    description: 'Resource group on which the resource has to be deployed : required when scope is resource group'
+    required: false
+  management_group_id:
+    description: "The management group id to create deployment at : only required when scope is management group"
     required: false
   mode:
-    description: 'The deployment mode.  Allowed values: Complete, Incremental.  Default: Incremental.'
+    description: 'The deployment mode.Allowed values: Complete, Incremental.  Default: Incremental.'
     required: false
-    default: 'Incremental'
+    default: ''
   name:
     description: 'The deployment name.'
     required: false
@@ -93,6 +149,11 @@ inputs:
     description: 'the parameters directly as as <KEY=VALUE> pairs'
     required: false
     default: ''
+outputs:
+  deployment_status:
+    description: 'Status of the deployment'
+  deployment_result:
+    description: 'deployment error details in case status is Failed'
 branding:
   color: 'blue'
 runs:
