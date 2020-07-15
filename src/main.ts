@@ -26,18 +26,18 @@ async function main() {
                 await deployscope(validation_prefix,deployment_prefix);
                 break;
             case "subscription":
-                validation_prefix = "az deployment sub validate "
-                deployment_prefix = "az deployment sub create "
+                validation_prefix = "deployment sub validate "
+                deployment_prefix = "deployment sub create "
                 await deployscope(validation_prefix,deployment_prefix);
                 break;
             case "management_group":
-                validation_prefix = "az deployment mg validate "
-                deployment_prefix = "az deployment mg create "
+                validation_prefix = "deployment mg validate "
+                deployment_prefix = "deployment mg create "
                 await deployscope(validation_prefix,deployment_prefix);
                 break;
             case "tenant":
-                validation_prefix = "az deployment tenant validate "
-                deployment_prefix = "az deployment tenant create "
+                validation_prefix = "deployment tenant validate "
+                deployment_prefix = "deployment tenant create "
                 await deployscope(validation_prefix,deployment_prefix);
                 break;
         }
