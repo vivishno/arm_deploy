@@ -93,7 +93,7 @@ jobs:
 | location | no | - | location where deployment info has to be stored : Not required if deployment scope is resource_group |
 | management_group_id | no | - | The management group id to create deployment at : only required when scope is management group |
 | mode | no | Incremental | The deployment mode.  Allowed values: Complete, Incremental.  Default: Incremental. See [DeploymentModes](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-modes) for details|
-| name | no | org+"_"+reponame | The deployment name |
+| name | no | - | The deployment name |
 | rollback_on_error | no | - | The name of a deployment to roll back to on error, or use as a flag to roll back to the last successful deployment. |
 | template_file | yes | - |  The path to the template file |
 | parameter_file | no | - | The path to the parameters file.|
