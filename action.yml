@@ -17,7 +17,7 @@ inputs:
   mode:
     description: 'The deployment mode.  Allowed values: Complete, Incremental.  Default: Incremental.'
     required: false
-    default: 'Incremental'
+    default: ''
   name:
     description: 'The deployment name.'
     required: false
