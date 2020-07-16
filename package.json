@@ -2,7 +2,7 @@
   "name": "arm_deploy",
   "version": "1.0.0",
   "description": "Azure action to deploy azure resources on a resource group using arm template",
-  "main": "lib/main.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
     "test": "jest"
@@ -15,7 +15,8 @@
     "jest": "^25.2.4",
     "jest-circus": "^25.2.7",
     "ts-jest": "^25.3.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "@zeit/ncc": "^0.21.1"
   },
   "dependencies": {
     "@actions/core": "^1.1.3",
