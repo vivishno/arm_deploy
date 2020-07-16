@@ -1,4 +1,5 @@
 ## GitHub Actions for deploying Azure resources using ARM templates
+![aml-deploy-infrastructure](https://github.com/mlopstemplates/arm_deploy/workflows/aml-deploy-infrastructure/badge.svg?branch=master)
 
 [GitHub Actions](https://help.github.com/en/articles/about-github-actions)  gives you the flexibility to build an automated software development lifecycle workflow. 
 
