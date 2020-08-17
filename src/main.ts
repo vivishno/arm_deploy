@@ -10,7 +10,7 @@ import { stat } from 'fs';
 var azPath: string;
 var isArmDeploymentSuccess = false;
 var workspacePath = !!process.env.GITHUB_WORKSPACE ? `${process.env.GITHUB_WORKSPACE}`:"";
-async function main() {
+export async function main() {
     try {
         
         azPath = await io.which("az", true);
